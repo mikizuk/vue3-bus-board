@@ -30,8 +30,12 @@ body {
   border-bottom: 2px solid var(--base-color-active) !important;
 }
 
+.cart-height {
+  height: 500px;
+  overflow: scroll;
+}
+
 .dotted-border {
-  min-height: 444px;
   display: flex;
   justify-content: center;
   align-items: center;

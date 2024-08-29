@@ -3,6 +3,7 @@ import { ref, defineProps, defineEmits } from 'vue';
 
 interface Props {
   items: string[],
+  selectable: boolean
 }
 
 const props = defineProps<Props>()
@@ -12,15 +13,14 @@ const onClick = (newItem: string): void => {
   selectedItem.value = newItem;
   emit('onSelectItem', newItem)
 }
-
 </script>
 
 <template>
-  <ul class="list-group list-unstyled">
-    <li v-for="item of props.items" :key="item" class="">
+  <ul class="list-group list-unstyled cart-height">
+    <li v-for="item of [... new Set(props.items)]" :key="item" >
       <span
         class="list-group-item px-4 py-3"
-        :class="{'active': item === selectedItem}"
+        :class="{'active': props.selectable && (item === selectedItem)}"
         @click="onClick(item)">
         {{ item }}
       </span>

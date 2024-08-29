@@ -1,17 +1,8 @@
-import axios from "axios";
 import { createStore, Commit } from "vuex";
-import { timeToInt } from "@/utils";
+import { timeToInt } from "../utils";
+import { BusStop, fetchData, SortOrder } from "../api/buses";
 
-type SortOrder = 'asc' | 'desc';
-
-export interface BusStop {
-  line: number;
-  stop: string;
-  order: number;
-  time: string;
-}
-
-interface BusState {
+export interface BusState {
   busData: BusStop[] | null;
   error: string | null;
   loading: boolean;
@@ -34,7 +25,7 @@ const getters = {
     return [...new Set(state.busData?.map((item: BusStop) => item.stop))];
   },
   getBusLines(state: BusState): number[] {
-    return [...new Set(state.busData?.map((item: BusStop) => item.line))];
+    return [...new Set(state.busData?.map((item: BusStop) => item.line).sort((a,b) => a - b))];
   },
   isError(state: BusState): boolean {
     return !!state.error;
@@ -58,7 +49,6 @@ const getters = {
       ?.filter((stop: BusStop) => stop.line === state.selectedBusLine)
       .filter((stop: BusStop) => stop.stop === state.selectedBusStop)
       .sort((a: BusStop, b: BusStop) => timeToInt(a.time) - timeToInt(b.time))
-      // .sort((a: BusStop, b: BusStop) => a.order - b.order)
       .map((stop: BusStop) => stop.time)
 
     return busLineStops || [];
@@ -88,23 +78,17 @@ const mutations = {
 };
 
 const actions = {
-  fetchBusLines({ commit }: { commit: Commit }) {
-    const BASE_URL = `http://localhost:3000/stops?_sort=line&_line=asc`;
-    commit("setLoading", true);
-
-    axios
-      .get(BASE_URL)
-      .then((response) => {
-        console.info("busData", response.data);
-        commit("setBusData", response.data);
-      })
-      .catch((e: Error) => {
-        console.error("Error while fetch:", e.message);
-        commit("setError", e.message);
-      })
-      .finally(() => {
-        commit("setLoading", false);
-      });
+  async fetchBusLines({ commit }: { commit: Commit }) {    
+    try {
+      commit("setLoading", true);
+      const data: BusStop[] = await fetchData();
+      commit("setBusData", data);
+    } catch (e: unknown) {
+      console.error("Error while fetch:", (e as Error).message);
+      commit("setError", (e as Error).message);
+    } finally {
+      commit("setLoading", false);
+    }
   },
   selectBusLine({ commit }: { commit: Commit }, payload: number) {
     commit("setSelectedBusLine", payload);
@@ -131,5 +115,4 @@ export default createStore({
   getters,
   mutations,
   actions,
-  // modules: {}
 });

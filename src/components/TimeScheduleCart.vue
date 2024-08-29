@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import ItemList from "@/components/ItemList.vue";
+import ItemList from "./ItemList.vue";
 
 interface Props {
   times: string[],
@@ -14,6 +14,8 @@ const props = defineProps<Props>()
   <div v-if="props.times.length">
     <ItemList
       :items="props.times"
+      :selectable="false"
     />
   </div>
+  <div v-else>No items</div>
 </template>

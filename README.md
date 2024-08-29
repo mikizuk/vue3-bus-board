@@ -1,4 +1,4 @@
-# Bus stops interview task
+# Bus stops task
 
 ## Required environment
 `npm 8.11` and `node 16.15`

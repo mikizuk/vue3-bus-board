@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, ComputedRef, Ref } from "vue";
-import store from "@/store/index";
-import BusStops from "@/components/BusStops.vue";
-import SearchIcon from "@/icons/SearchIcon.vue";
+import store from "../store/index";
+import SortableItemList from "../components/SortableItemList.vue";
+import SearchIcon from "../icons/SearchIcon.vue";
 
 const searchQuery: Ref<string> = ref("");
 
@@ -25,7 +25,7 @@ const filteredBusStops: ComputedRef<string[]> = computed((): string[] => {
 </script>
 
 <template>
-  <div class="col bg-white rounded">
+  <div class="col bg-white rounded cart-height">
     <div class="pt-4 px-3">
       <div class="custom-form-group">
         <input
@@ -35,15 +35,16 @@ const filteredBusStops: ComputedRef<string[]> = computed((): string[] => {
           placeholder="Search..."
           v-model="searchQuery"
         />
-        <div
-          v-show="!searchQuery"
-          class="custom-form-icon"
-        >
+        <div v-show="!searchQuery" class="custom-form-icon">
           <SearchIcon />
         </div>
       </div>
     </div>
 
-    <BusStops :items="filteredBusStops" />
+    <SortableItemList
+      :items="filteredBusStops"
+      :title="'Bus stops'"
+      :selectable="false"
+    />
   </div>
 </template>
