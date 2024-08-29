@@ -1,32 +1,49 @@
 <script setup lang="ts">
-import store from '@/store/index'
-import { ref, computed } from 'vue';
+import { ref, computed, ComputedRef, Ref } from "vue";
+import store from "@/store/index";
+import BusStops from "@/components/BusStops.vue";
+import SearchIcon from "@/icons/SearchIcon.vue";
 
-const searchQuery = ref('');
+const searchQuery: Ref<string> = ref("");
 
-const filteredLocations = computed(() => {
+const filteredBusStops: ComputedRef<string[]> = computed((): string[] => {
   const query = searchQuery.value.toLowerCase();
 
-  // console.info('query:', query,
-  //   '??', store.getters.getBusStops
-  // );
-  return store.getters.getBusStops.filter((location: string) =>
+  const sortedBusStops =
+    store.state.busStopOrder === "asc"
+      ? store.getters.getBusStops.sort((a: string, b: string) =>
+          a.localeCompare(b)
+        )
+      : store.getters.getBusStops.sort((a: string, b: string) =>
+          b.localeCompare(a)
+        );
+
+  return sortedBusStops.filter((location: string) =>
     location.toLowerCase().includes(query)
   );
 });
-
-
 </script>
 
 <template>
-      <input 
-      type="text" 
-      v-model="searchQuery" 
-      placeholder="Search locations..." 
-      class="search-input"
-    />
-  <hr>
-  {{ filteredLocations }}
-  <!-- <hr> -->
-  <!-- {{ store.getters.getBusStops }} -->
+  <div class="col bg-white rounded">
+    <div class="pt-4 px-3">
+      <div class="custom-form-group">
+        <input
+          type="search"
+          id="form1"
+          class="form-control custom-form-control"
+          placeholder="Search..."
+          v-model="searchQuery"
+        />
+        <div
+          v-show="!searchQuery"
+          class="custom-form-icon"
+        >
+          <SearchIcon />
+        </div>
+      </div>
+    </div>
+
+    <BusStops :items="filteredBusStops" />
+  </div>
 </template>

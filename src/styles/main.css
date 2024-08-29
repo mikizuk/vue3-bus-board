@@ -1,8 +1,100 @@
+:root {
+  --base-color-white: #fff;
+  --base-color-active: #1952E1;
+  --base-color-grey-1: #e9ecef;
+  --base-color-grey-2: #F8F8FB;
+  --base-color-grey-3: #F3F4F9;
+  --base-dashed-border-color: #9A9DA4;
+}
+
 body {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 300;
-  /* color: red; */
-  /* min-height: 100vh; */
-  /* border: 1px solid red; */
+  background-color: var(--base-color-grey-3) ;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* BOOTSTRAP OVERWRITES */
+
+.nav-link {
+  border: 0 !important;
+  border-color: initial !important;
+
+}
+
+.router-link-exact-active {
+  border-bottom: 2px solid var(--base-color-active) !important;
+}
+
+.dotted-border {
+  min-height: 444px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position:  0 0, 0 0, 100% 0, 0 100%;
+  background-size: 3px 100%, 100% 3px, 3px 100% , 100% 3px;
+  background-repeat: no-repeat;
+  background-image:
+      repeating-linear-gradient(0deg, var(--base-dashed-border-color), var(--base-dashed-border-color) 10px, transparent 10px, transparent 20px),
+      repeating-linear-gradient(90deg, var(--base-dashed-border-color), var(--base-dashed-border-color) 10px, transparent 10px, transparent 20px),
+      repeating-linear-gradient(180deg, var(--base-dashed-border-color), var(--base-dashed-border-color) 10px, transparent 10px, transparent 20px),
+      repeating-linear-gradient(270deg, var(--base-dashed-border-color), var(--base-dashed-border-color) 10px, transparent 10px, transparent 20px)
+  ;
+  border-image: repeating-linear-gradient(0deg, var(--base-dashed-border-color), var(--base-dashed-border-color) 10px, transparent 10px, transparent 20px);
+}
+
+.w-fit {
+  width: fit-content;
+}
+
+.pointer {
+  cursor: pointer;
+  user-select: none;
+}
+.pointer:hover {
+  color: var(--base-color-active);
+}
+
+.list-group {
+  --bs-list-group-active-color: var(--base-color-active);
+  --bs-list-group-active-bg: var(--base-color-white);
+  --bs-list-group-active-bg: var(--base-color-white);
+  --bs-list-group-active-border-color: var(--base-color-grey-1);
+}
+
+.list-group-item {
+  cursor: pointer;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.list-group-item:hover {
+  background-color: var(--base-color-grey-2);
+}
+
+.custom-form-group {
+  width: fit-content;
+  position: relative;
+}
+.custom-form-control {
+  position: relative;
+}
+
+.custom-form-icon {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+}
+
+/* RWD */
+
+@media (min-width: 1401px) {
+  .container-xxl {
+    max-width: 1400px;
+  }
 }

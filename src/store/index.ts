@@ -4,7 +4,7 @@ import { timeToInt } from "@/utils";
 
 type SortOrder = 'asc' | 'desc';
 
-interface BusStop {
+export interface BusStop {
   line: number;
   stop: string;
   order: number;
@@ -119,6 +119,9 @@ const actions = {
     } else {
       commit("setBusStopOrder", 'desc')
     }
+  },
+  deselectBusStop({ commit }: { commit: Commit}) {
+    commit("setSelectedBusStop", null)
   }
 
 };
