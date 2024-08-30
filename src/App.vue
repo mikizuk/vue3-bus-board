@@ -9,7 +9,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container-xxl pt-5">
+  <div class="container-xxl pt-4">
     <header >
       <h1 class="h1 mb-2">Timetable</h1>
       <nav class="nav nav-tabs my-4 px-3 bg-white rounded">

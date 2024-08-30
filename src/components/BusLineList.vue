@@ -18,7 +18,7 @@ const onClick = (newItem: number): void => {
 <template>
   <div class="tab-content my-3 bg-white rounded p-4">
     <h3 class="h5">Select Bus Line</h3>
-    <ul class="py-4 list-unstyled d-flex flex-wrap gap-2">
+    <ul class="pt-4 list-unstyled d-flex flex-wrap gap-2">
       <li v-for="lineItem of props.lineList" :key="lineItem">
         <button
           class="btn btn-primary"
